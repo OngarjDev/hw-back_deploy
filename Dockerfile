@@ -16,6 +16,11 @@ RUN bun install
 
 RUN bunx prisma generate
 
-EXPOSE 3000
+FROM mcr.microsoft.com/appsvc/node:10-lts
 
+ENV HOST 0.0.0.0
+ENV PORT 8080
+EXPOSE 8080
+
+ENTRYPOINT ["pm2", "start", "--no-daemon", "/opt/startup/index.js"]
 CMD ["bun", "start"]
