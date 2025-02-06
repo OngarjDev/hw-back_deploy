@@ -45,13 +45,13 @@ jobs:
       #     echo -e '$ENV_FILE_CONTENT' | base64 -d > ~/hippo-backend/.env &&
       #     echo '' >> ~/hippo-backend/.env
       #     "
-      - name: Write .env file on server
-        run: |
-          sshpass -p "$REMOTE_SSH_PASSWORD" ssh $REMOTE_SSH_ARGS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null << 'EOF'
-          cat > ~/hippo-backend/.env <<EOL
-          $ENV_FILE_CONTENT
-          EOL
-          EOF
+      # - name: Write .env file on server
+      #   run: |
+      #     sshpass -p "$REMOTE_SSH_PASSWORD" ssh $REMOTE_SSH_ARGS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null << 'EOF'
+      #     cat > ~/hippo-backend/.env <<EOL
+      #     $ENV_FILE_CONTENT
+      #     EOL
+      #     EOF
 
       - name: Install dependencies on server
         run: |
