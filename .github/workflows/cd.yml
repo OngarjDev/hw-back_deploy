@@ -62,18 +62,12 @@ jobs:
           npm ci
           "
           
-      - name: Ensure PM2 is installed
-        run: |
-          sshpass -p "$REMOTE_SSH_PASSWORD" ssh "$REMOTE_SSH_ARGS" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
-          export NVM_DIR=\$HOME/.nvm &&
-          [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" &&
-          npm install -g pm2 || true
-          "
-          
       - name: Start Express Backend
         run: |
           sshpass -p $REMOTE_SSH_PASSWORD ssh $REMOTE_SSH_ARGS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
-          pm2 describe backend || pm2 stop backend || true &&
-          pm2 delete backend || true &&
+          export NVM_DIR=\$HOME/.nvm &&
+          [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" &&
+          npx pm2 describe backend || npx pm2 stop backend || true &&
+          npx pm2 delete backend || true &&
           cd ~/hippo-backend && pm2 start ~/hippo-backend/index.js --name backend --env production
           "
