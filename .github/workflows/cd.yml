@@ -61,6 +61,7 @@ jobs:
           [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" &&
           npm ci
           "
+          
       - name: Ensure PM2 is installed
         run: |
           sshpass -p "$REMOTE_SSH_PASSWORD" ssh "$REMOTE_SSH_ARGS" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
@@ -68,6 +69,7 @@ jobs:
           [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" &&
           npm install -g pm2 || true
           "
+          
       - name: Start Express Backend
         run: |
           sshpass -p $REMOTE_SSH_PASSWORD ssh $REMOTE_SSH_ARGS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
