@@ -3,7 +3,7 @@
   "module": "index.js",
   "type": "module",
   "scripts": {
-    "start": "node run index.js",
+    "start": "node index.js",
     "dev": "node --watch index.js"
   },
   "dependencies": {
@@ -11,6 +11,8 @@
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
+    "generate": "^0.14.0",
+    "prisma": "^6.3.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },
