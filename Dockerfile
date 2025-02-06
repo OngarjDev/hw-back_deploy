@@ -1,23 +1,23 @@
-FROM oven/bun:1
+# ใช้ Node.js แทน Bun
+FROM node:20-alpine  
 
 WORKDIR /app
 
+# คัดลอกไฟล์ package.json และ lock file
+COPY package.json package-lock.json ./
 
-COPY package.json ./
-COPY bun.lockb ./
+# ติดตั้ง dependencies ด้วย npm
+RUN npm install  
 
-
-COPY prisma ./prisma/
-
-
+# คัดลอกโค้ดทั้งหมด
 COPY . .
 
-RUN bun install
+# รัน Prisma Generate ถ้ามี Prisma
+RUN npx prisma generate  
 
-RUN bunx prisma generate
-
+# กำหนด PORT
 ENV PORT 8080
 EXPOSE 8080
 
-# ENTRYPOINT ["pm2", "start", "--no-daemon", "/opt/startup/index.js"]
-CMD ["bun", "start"]
+# ใช้ PM2 หรือรันด้วย node ปกติ
+CMD ["node", "index.js"]

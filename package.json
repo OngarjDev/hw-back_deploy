@@ -3,8 +3,8 @@
   "module": "index.js",
   "type": "module",
   "scripts": {
-    "start": "bun run index.js",
-    "dev": "bun --watch index.js"
+    "start": "node run index.js",
+    "dev": "node --watch index.js"
   },
   "dependencies": {
     "@prisma/client": "^6.3.0",
