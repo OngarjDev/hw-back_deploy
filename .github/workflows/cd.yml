@@ -57,8 +57,7 @@ jobs:
         run: |
           sshpass -p $REMOTE_SSH_PASSWORD ssh $REMOTE_SSH_ARGS -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null "
           cd ~/hippo-backend &&
-          npm ci &&
-          npx prisma generate
+          npm ci
           "
 
       - name: Start Express Backend
