@@ -15,8 +15,8 @@ COPY . .
 RUN npx prisma generate  
 
 # กำหนด PORT
-ENV PORT 8080
-EXPOSE 8080
+ENV PORT 80
+EXPOSE 80
 
 # ใช้ PM2 หรือรันด้วย node ปกติ
 CMD ["node", "index.js"]
