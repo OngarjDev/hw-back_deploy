@@ -45,15 +45,15 @@ model Bookings {
     repeatDay            RepeatDay?
     repeatEndDate        DateTime?   @db.Date
     lastUpdate           DateTime    @default(dbgenerated("CURRENT_TIMESTAMP")) @db.Timestamp
-    building             Building    @relation(fields: [buildings_buildingId], references: [buildingId])
+    building             Buildings    @relation(fields: [buildings_buildingId], references: [buildingId])
     buildings_buildingId String      @db.VarChar(30)
 }
 
 model Buildings {
     buildingId String    @id @db.VarChar(30)
     floor      Int
-    bookings   Booking[]
-    rooms      Room[]
+    bookings   Bookings[]
+    rooms      Rooms[]
 }
 
 enum RoomStatus {
