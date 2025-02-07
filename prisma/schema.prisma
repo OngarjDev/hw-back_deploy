@@ -65,6 +65,6 @@ enum RoomStatus {
 model Rooms {
     roomId               String     @id @db.VarChar(7)
     roomStatus           RoomStatus @default(AVAILABLE)
-    building             Building   @relation(fields: [buildings_buildingId], references: [buildingId])
+    building             Buildings   @relation(fields: [buildings_buildingId], references: [buildingId])
     buildings_buildingId String     @db.VarChar(30)
 }
