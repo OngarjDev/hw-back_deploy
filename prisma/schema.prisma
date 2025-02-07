@@ -31,7 +31,7 @@ enum RepeatDay {
     SUNDAY
 }
 
-model Booking {
+model Bookings {
     bookingId            String      @id @default(uuid()) @db.VarChar(12)
     bookingName          String      @db.VarChar(100)
     bookingDESC          String      @db.Text
@@ -49,7 +49,7 @@ model Booking {
     buildings_buildingId String      @db.VarChar(30)
 }
 
-model Building {
+model Buildings {
     buildingId String    @id @db.VarChar(30)
     floor      Int
     bookings   Booking[]
@@ -62,7 +62,7 @@ enum RoomStatus {
     MAINTENANCE
 }
 
-model Room {
+model Rooms {
     roomId               String     @id @db.VarChar(7)
     roomStatus           RoomStatus @default(AVAILABLE)
     building             Building   @relation(fields: [buildings_buildingId], references: [buildingId])

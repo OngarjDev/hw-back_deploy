@@ -53,21 +53,21 @@ const prisma = new PrismaClient();
 
 // check room is available
 const isRoomAvailable = async (buildings_buildingId, startTime, endTime, excludeBookingId = null) => {
-  const room = await prisma.room.findFirst({
+  const rooms = await prisma.rooms.findFirst({
     where: {
       buildings_buildingId: buildings_buildingId,
     }
   });
 
-  if (!room || room.roomStatus !== 'AVAILABLE') {
+  if (!rooms || rooms.roomStatus !== 'AVAILABLE') {
     return {
       available: false,
-      message: room ? 'Room is currently unavailable or under maintenance' : 'Room not found'
+      message: rooms ? 'Room is currently unavailable or under maintenance' : 'Room not found'
     };
   }
 
   //check existing bookings
-  const existingBooking = await prisma.booking.findFirst({
+  const existingBooking = await prisma.bookings.findFirst({
     where: {
       buildings_buildingId: buildings_buildingId,
       AND: [
@@ -91,17 +91,17 @@ const isRoomAvailable = async (buildings_buildingId, startTime, endTime, exclude
   });
 
   return {
-    available: !existingBooking,
-    message: existingBooking ? 'Room is already booked for this time period' : null
+    available: !existingBookings,
+    message: existingBookings ? 'Room is already booked for this time period' : null
   };
 };
 
 //Get all bookings
 router.get('/', async (req, res) => {
   try {
-    const bookings = await prisma.booking.findMany({
+    const bookings = await prisma.bookings.findMany({
       include: {
-        building: true
+        buildings: true
       }
     });
     res.json(bookings);
@@ -113,16 +113,16 @@ router.get('/', async (req, res) => {
 // Get booking by id
 router.get('/:id', async (req, res) => {
   try {
-    const booking = await prisma.booking.findUnique({
+    const bookings = await prisma.bookings.findUnique({
       where: { bookingId: req.params.id },
       include: {
         building: true
       }
     });
-    if (!booking) {
-      return res.status(404).json({ error: 'Booking not found' });
+    if (!bookings) {
+      return res.status(404).json({ error: 'Bookings not found' });
     }
-    res.json(booking);
+    res.json(bookings);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -141,13 +141,13 @@ router.post('/', async (req, res) => {
       });
     }
 
-    const booking = await prisma.booking.create({
+    const bookings = await prisma.bookings.create({
       data: {
         ...req.body,
         lastUpdate: new Date()
       }
     });
-    res.status(201).json(booking);
+    res.status(201).json(bookings);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -171,14 +171,14 @@ router.put('/:id', async (req, res) => {
       });
     }
 
-    const booking = await prisma.booking.update({
+    const bookings = await prisma.bookings.update({
       where: { bookingId: req.params.id },
       data: {
         ...req.body,
         lastUpdate: new Date()
       }
     });
-    res.json(booking);
+    res.json(bookings);
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -187,7 +187,7 @@ router.put('/:id', async (req, res) => {
 // Delete booking
 router.delete('/:id', async (req, res) => {
   try {
-    await prisma.booking.delete({
+    await prisma.bookings.delete({
       where: { bookingId: req.params.id }
     });
     res.status(204).send();
