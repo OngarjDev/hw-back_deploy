@@ -59,7 +59,7 @@ jobs:
           cd ~/hippo-backend &&
           export NVM_DIR=\$HOME/.nvm &&
           [ -s \"\$NVM_DIR/nvm.sh\" ] && . \"\$NVM_DIR/nvm.sh\" &&
-          npm ci
+          npm ci && npx prisma generate
           "
           
       - name: Start Express Backend
