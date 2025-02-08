@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: `http://${hostname}:3000`,
+        url: `http://${hostname}:2048`,
         description: 'Development server',
       },
     ],
