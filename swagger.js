@@ -12,7 +12,7 @@ const options = {
     },
     servers: [
       {
-        url: `http://${hostname}:3000`,
+        url: `http://${hostname}:2048`,
         description: 'Development server',
       },
     ],
@@ -52,7 +52,7 @@ const options = {
       }
     }
   },
-  apis: ['./src/routes/*.js'], 
+  apis: ['./routes/*.js'], 
 };
 
 export const specs = swaggerJsdoc(options);
