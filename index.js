@@ -1,7 +1,7 @@
 import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
-// import bookingRoutes from '/routes/bookingRoutes.js';
+import bookingRoutes from './routes/bookingRoutes.js';
 // import buildingRoutes from '/routes/buildingRoutes.js';
 import roomRoutes from './routes/roomRoutes.js';
 import swaggerUi from 'swagger-ui-express';
@@ -46,7 +46,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(specs));
 app.get('/health', (req, res) => {
   res.json({ status: 'OK', timestamp: new Date() });
 });
-// app.use('/api/bookings', bookingRoutes);
+app.use('/api/bookings', bookingRoutes);
 // app.use('/api/buildings', buildingRoutes);
 app.use('/api/rooms', roomRoutes);
 
