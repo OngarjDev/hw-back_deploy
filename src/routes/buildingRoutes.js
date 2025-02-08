@@ -52,7 +52,7 @@ const prisma = new PrismaClient();
 // Get all buildings
 router.get('/', async (req, res) => {
   try {
-    const buildings = await prisma.building.findMany({
+    const buildings = await prisma.buildings.findMany({
       include: {
         rooms: true,
         bookings: true
@@ -67,7 +67,7 @@ router.get('/', async (req, res) => {
 // Get building by ID
 router.get('/:id', async (req, res) => {
   try {
-    const building = await prisma.building.findUnique({
+    const building = await prisma.buildings.findUnique({
       where: { buildingId: req.params.id },
       include: {
         rooms: true,
@@ -86,7 +86,7 @@ router.get('/:id', async (req, res) => {
 // Create building
 router.post('/', async (req, res) => {
   try {
-    const building = await prisma.building.create({
+    const building = await prisma.buildings.create({
       data: req.body
     });
     res.status(201).json(building);
@@ -98,7 +98,7 @@ router.post('/', async (req, res) => {
 // Update building
 router.put('/:id', async (req, res) => {
   try {
-    const building = await prisma.building.update({
+    const building = await prisma.buildings.update({
       where: { buildingId: req.params.id },
       data: req.body
     });
@@ -111,7 +111,7 @@ router.put('/:id', async (req, res) => {
 // Delete building
 router.delete('/:id', async (req, res) => {
   try {
-    await prisma.building.delete({
+    await prisma.buildings.delete({
       where: { buildingId: req.params.id }
     });
     res.status(204).send();

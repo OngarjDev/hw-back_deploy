@@ -60,7 +60,7 @@ const prisma = new PrismaClient();
 // Get all rooms
 router.get('/', async (req, res) => {
   try {
-    const rooms = await prisma.room.findMany({
+    const rooms = await prisma.rooms.findMany({
       include: {
         building: true
       }
@@ -74,7 +74,7 @@ router.get('/', async (req, res) => {
 // Get room by ID
 router.get('/:id', async (req, res) => {
   try {
-    const room = await prisma.room.findUnique({
+    const room = await prisma.rooms.findUnique({
       where: { roomId: req.params.id },
       include: {
         building: true
@@ -92,7 +92,7 @@ router.get('/:id', async (req, res) => {
 // Create room
 router.post('/', async (req, res) => {
   try {
-    const room = await prisma.room.create({
+    const room = await prisma.rooms.create({
       data: req.body
     });
     res.status(201).json(room);
@@ -104,7 +104,7 @@ router.post('/', async (req, res) => {
 // Update room
 router.put('/:id', async (req, res) => {
   try {
-    const room = await prisma.room.update({
+    const room = await prisma.rooms.update({
       where: { roomId: req.params.id },
       data: req.body
     });
@@ -118,7 +118,7 @@ router.put('/:id', async (req, res) => {
 router.patch('/:id/status', async (req, res) => {
   try {
     const { roomStatus } = req.body;
-    const room = await prisma.room.update({
+    const room = await prisma.rooms.update({
       where: { roomId: req.params.id },
       data: { roomStatus }
     });
@@ -131,7 +131,7 @@ router.patch('/:id/status', async (req, res) => {
 // Delete room
 router.delete('/:id', async (req, res) => {
   try {
-    await prisma.room.delete({
+    await prisma.rooms.delete({
       where: { roomId: req.params.id }
     });
     res.status(204).send();

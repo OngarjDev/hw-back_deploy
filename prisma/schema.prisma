@@ -1,70 +1,75 @@
 generator client {
-    provider = "prisma-client-js"
+  provider = "prisma-client-js"
 }
 
 datasource db {
-    provider = "mysql"
-    url      = env("DATABASE_URL")
+  provider = "mysql"
+  url      = env("DATABASE_URL")
 }
 
-enum BookingType {
-    DAILY
-    WEEKLY
-    MONTHLY
-    ONCE
+model bookings {
+  bookingId            Int
+  buildings_buildingId String               @db.VarChar(10)
+  bookingName          String               @db.VarChar(100)
+  bookingDESC          String?              @db.Text
+  startTime            DateTime             @db.DateTime(0)
+  endTime              DateTime             @db.DateTime(0)
+  createdBy            String               @db.VarChar(45)
+  modifiedBy           String?              @db.VarChar(45)
+  Type                 bookings_Type
+  reapeatType          bookings_reapeatType
+  repeatEvery          String?              @db.VarChar(45)
+  repeatDay            bookings_repeatDay?
+  repeatEndDate        DateTime             @db.Date
+  lastUpdate           DateTime?            @db.Timestamp(0)
+  instructor           String?              @db.VarChar(100)
+  buildings            buildings            @relation(fields: [buildings_buildingId], references: [buildingId], onDelete: NoAction, onUpdate: NoAction, map: "fk_bookings_buildings1")
+
+  @@id([bookingId, buildings_buildingId])
+  @@index([buildings_buildingId], map: "fk_bookings_buildings1_idx")
 }
 
-enum RepeatType {
-    EVERY_DAY
-    EVERY_WEEK
-    EVERY_MONTH
-    NONE
+model buildings {
+  buildingId   String     @id @db.VarChar(10)
+  buildungName String     @db.VarChar(30)
+  floor        Int
+  bookings     bookings[]
+  rooms        rooms[]
 }
 
-enum RepeatDay {
-    MONDAY
-    TUESDAY
-    WEDNESDAY
-    THURSDAY
-    FRIDAY
-    SATURDAY
-    SUNDAY
+model rooms {
+  roomId               String           @db.VarChar(7)
+  buildings_buildingId String           @db.VarChar(10)
+  roomStatus           rooms_roomStatus
+  buildings            buildings        @relation(fields: [buildings_buildingId], references: [buildingId], onDelete: NoAction, onUpdate: NoAction, map: "fk_rooms_buildings1")
+
+  @@id([roomId, buildings_buildingId])
+  @@index([buildings_buildingId], map: "fk_rooms_buildings1_idx")
 }
 
-model Bookings {
-    bookingId            String      @id @default(uuid()) @db.VarChar(12)
-    bookingName          String      @db.VarChar(100)
-    bookingDESC          String      @db.Text
-    startTime            DateTime
-    endTime              DateTime
-    createdBy            String      @db.VarChar(45)
-    modifiedBy           String      @db.VarChar(45)
-    type                 BookingType
-    repeatType           RepeatType? @default(NONE)
-    repeatEvery          String?     @db.VarChar(45)
-    repeatDay            RepeatDay?
-    repeatEndDate        DateTime?   @db.Date
-    lastUpdate           DateTime    @default(dbgenerated("CURRENT_TIMESTAMP")) @db.Timestamp
-    building             Building    @relation(fields: [buildings_buildingId], references: [buildingId])
-    buildings_buildingId String      @db.VarChar(30)
+enum rooms_roomStatus {
+  available
+  not_available @map("not available")
 }
 
-model Buildings {
-    buildingId String    @id @db.VarChar(30)
-    floor      Int
-    bookings   Booking[]
-    rooms      Room[]
+enum bookings_Type {
+  Lecturer
+  Staff
+  LF
+  Student
 }
 
-enum RoomStatus {
-    AVAILABLE
-    UNAVAILABLE
-    MAINTENANCE
+enum bookings_reapeatType {
+  None
+  Weekly
 }
 
-model Rooms {
-    roomId               String     @id @db.VarChar(7)
-    roomStatus           RoomStatus @default(AVAILABLE)
-    building             Building   @relation(fields: [buildings_buildingId], references: [buildingId])
-    buildings_buildingId String     @db.VarChar(30)
+enum bookings_repeatDay {
+  Monday
+  Tuesday
+  Wednesday
+  Thursday
+  Friday
+  Saturday
+  Sunday
 }
