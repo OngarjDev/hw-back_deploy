@@ -70,6 +70,44 @@ router.get('/getall', getAllRooms);  // เรียกใช้ฟังก์�
  *               message: "Cannot fetch room data"
  */
 
-router.post('/add', addRoom)
+router.post('/add', getAllRooms)
 
+
+/**
+ * @swagger
+ * /api/rooms/add:
+ *   post:
+ *     tags:
+ *       - Room Management
+ *     summary: เพิ่มข้อมูลห้องทั้งหมด
+ *     parameters:
+ *       - in: query
+ *         name: roomName
+ *         required: true
+ *         schema:
+ *           type: string
+ *           example: "Lx12-2"
+ *     responses:
+ *       200:
+ *         description: สำเร็จ - คืนรายการห้องทั้งหมด
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   room_name:
+ *                     type: string
+ *                     example: "2301"
+ *       500:
+ *         description: เกิดข้อผิดพลาดใน server
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: "Database error"
+ *               message: "Cannot fetch room data"
+ */
+
+router.post('/add', addRoom)
 export default router;

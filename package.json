@@ -7,13 +7,11 @@
     "dev": "node --watch index.js"
   },
   "dependencies": {
-    "@prisma/client": "^6.3.0",
     "cors": "^2.8.5",
     "dotenv": "^16.4.7",
     "express": "^4.21.2",
     "generate": "^0.14.0",
     "mysql2": "^3.12.0",
-    "prisma": "^6.3.1",
     "swagger-jsdoc": "^6.2.8",
     "swagger-ui-express": "^5.0.0"
   },
