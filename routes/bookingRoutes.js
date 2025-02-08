@@ -9,7 +9,7 @@ const router = express.Router();
  *   get:
  *     tags:
  *       - bookings Management 
- *     summary: ดึงรายการห้องทั้งหมด
+ *     summary: ดึงรายการจองทั้งหมด
  *     responses:
  *       200:
  *         description: สำเร็จ - คืนรายการห้องทั้งหมด
@@ -85,4 +85,241 @@ router.get('/getall', getAllBooking);
  */
 router.post('/add', addBookings);
 
+
+/**
+ * @swagger
+ * /api/bookings/{id}:
+ *   get:
+ *     tags:
+ *       - Booking Management
+ *     summary: Get booking by ID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       200:
+ *         description: Successfully retrieved the booking
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 bookingId:
+ *                   type: integer
+ *                   example: 1
+ *                 startTime:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2025-02-09T10:30:00Z"
+ *                 endTime:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2025-02-09T14:30:00Z"
+ *                 building:
+ *                   type: object
+ *                   properties:
+ *                     buildingId:
+ *                       type: integer
+ *                       example: 101
+ *                     buildingName:
+ *                       type: string
+ *                       example: "Building A"
+ *       404:
+ *         description: Booking not found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Bookings not found"
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Database error"
+ *                 message:
+ *                   type: string
+ *                   example: "Cannot fetch booking data"
+ */
+router.get('/:id', async (req, res) => {
+    // Code for getting booking by ID
+  });
+
+  /**
+ * @swagger
+ * /api/bookings:
+ *   post:
+ *     tags:
+ *       - Booking Management
+ *     summary: Create a new booking
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               buildings_buildingId:
+ *                 type: integer
+ *                 example: 101
+ *               startTime:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-02-09T10:30:00Z"
+ *               endTime:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-02-09T14:30:00Z"
+ *     responses:
+ *       201:
+ *         description: Successfully created booking
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 bookingId:
+ *                   type: integer
+ *                   example: 1
+ *                 startTime:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2025-02-09T10:30:00Z"
+ *                 endTime:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2025-02-09T14:30:00Z"
+ *       409:
+ *         description: Conflict - Room not available
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Room not available"
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Database error"
+ *                 message:
+ *                   type: string
+ *                   example: "Cannot create booking"
+ */
+router.post('/', async (req, res) => {
+    // Code for creating booking
+  });
+
+  /**
+ * @swagger
+ * /api/bookings/{id}:
+ *   put:
+ *     tags:
+ *       - Booking Management
+ *     summary: Update a booking
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               buildings_buildingId:
+ *                 type: integer
+ *                 example: 101
+ *               startTime:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-02-09T10:30:00Z"
+ *               endTime:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-02-09T14:30:00Z"
+ *     responses:
+ *       200:
+ *         description: Successfully updated booking
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 bookingId:
+ *                   type: integer
+ *                   example: 1
+ *                 startTime:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2025-02-09T10:30:00Z"
+ *                 endTime:
+ *                   type: string
+ *                   format: date-time
+ *                   example: "2025-02-09T14:30:00Z"
+ *       404:
+ *         description: Booking not found
+ *       500:
+ *         description: Server error
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Database error"
+ */
+router.put('/:id', async (req, res) => {
+    // Code for updating booking
+  });
+
+  /**
+ * @swagger
+ * /api/bookings/{id}:
+ *   delete:
+ *     tags:
+ *       - Booking Management
+ *     summary: Delete a booking
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 1
+ *     responses:
+ *       204:
+ *         description: Successfully deleted booking
+ *       404:
+ *         description: Booking not found
+ *       500:
+ *         description: Server error
+ */
+router.delete('/:id', async (req, res) => {
+    // Code for deleting booking
+  });
+  
 export default router;
