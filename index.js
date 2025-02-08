@@ -12,7 +12,7 @@ import mysql from 'mysql2';
 
 dotenv.config();
 // เชื่อมต่อกับฐานข้อมูล MySQL
-const pool = mysql.createPool({
+export const pool = mysql.createPool({
   host: process.env.DATABASE_URL,
   user:  process.env.MYSQL_USER,             // ชื่อผู้ใช้ฐานข้อมูล
   password: process.env.MYSQL_PASSWORD,             // รหัสผ่านฐานข้อมูล
@@ -48,7 +48,7 @@ app.get('/health', (req, res) => {
 });
 // app.use('/api/bookings', bookingRoutes);
 // app.use('/api/buildings', buildingRoutes);
-// app.use('/api/rooms', roomRoutes);
+app.use('/api/rooms', roomRoutes);
 
 // Error middleware
 app.use((err, req, res, next) => {
