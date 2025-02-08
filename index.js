@@ -7,10 +7,13 @@ import buildingRoutes from './src/routes/buildingRoutes.js';
 import roomRoutes from './src/routes/roomRoutes.js';
 import swaggerUi from 'swagger-ui-express';
 import { specs } from './swagger.js';
+const os = await import("os");
+
 
 dotenv.config();
 
 const prisma = new PrismaClient();
+const hostname = os.default.hostname();
 const app = express();
 
 // Middleware
@@ -46,7 +49,8 @@ const PORT = process.env.PORT || 8080;
 // start server
 app.listen(PORT, () => {
   console.log(`Server is running on port ${PORT}`);
-  console.log(`Health check available at http://localhost:${PORT}/health`);
+  console.log(`Health check available at http://${hostname}:${PORT}/health`);
+  console.log(`API DOCS at http://${hostname}:${PORT}/api-docs`);
 });
 
 // Graceful shutdown
