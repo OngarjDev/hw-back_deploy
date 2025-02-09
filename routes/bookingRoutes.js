@@ -1,6 +1,5 @@
 import express from 'express';
-import { getAllBooking, addBookings } from '../controller/bookingController.js';
-import { getByIdRoom } from '../controller/roomController.js';
+import { getAllBooking,getByIdBookings, addBookings } from '../controller/bookingController.js';
 
 const router = express.Router();
 
@@ -11,6 +10,13 @@ const router = express.Router();
  *     tags:
  *       - Bookings Management
  *     summary: ดึงรายการห้องทั้งหมด
+*     parameters:
+ *       - in: path
+ *         name: id  # เปลี่ยนจาก
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 3
  *     responses:
  *       200:
  *         description: สำเร็จ - คืนรายการห้องทั้งหมด
@@ -62,14 +68,21 @@ router.get('/getall', getAllBooking);
 
 /**
  * @swagger
- * /api/bookings/getall:
+ * /api/bookings/getByIdBooking/{id}:
  *   get:
  *     tags:
  *       - Bookings Management
- *     summary: ดึงรายการห้องทั้งหมด
+ *     summary: ดึงรายการห้อง เฉพาะID
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *           example: 5
  *     responses:
  *       200:
- *         description: สำเร็จ - คืนรายการห้องทั้งหมด
+ *         description: สำเร็จ - คืนรายการห้อง
  *         content:
  *           application/json:
  *             schema:
@@ -114,7 +127,7 @@ router.get('/getall', getAllBooking);
  *                   type: string
  *                   example: "Cannot fetch room data"
  */
-router.get('/getByIdBooking', getBy);
+router.get('/getByIdBooking/:id', getByIdBookings);
 
 /**
  * @swagger

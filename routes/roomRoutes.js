@@ -78,13 +78,13 @@ router.post('/add', addRoom); // ฟังก์ชันที่เพิ่�
 /**
  * @swagger
  * /api/rooms/getroomById/{id}:
- *   get:  # ใช้ GET แทน POST
+ *   get: 
  *     tags:
  *       - Room Management
  *     summary: ค้นหาข้อมูลห้องด้วย ID
  *     parameters:
  *       - in: path
- *         name: id  # เปลี่ยนจาก `roomId` เป็น `id` ให้ตรงกับ URL path
+ *         name: id  # เปลี่ยนจาก
  *         required: true
  *         schema:
  *           type: integer

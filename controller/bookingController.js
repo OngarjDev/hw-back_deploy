@@ -10,25 +10,26 @@ const getAllBooking = async (req, res) => {
     }
 }
 
-const getByIdRoom = async (req, res) => {
+const getByIdBookings = async (req, res) => {
   try {
     const [rows] = await pool.promise().query(
-      `SELECT * FROM helloworld_test.rooms WHERE roomId = ? LIMIT 1`, 
-      [req.params.id] // ใช้ parameter binding แทนการต่อสาย string ด้วยตัวเองเพื่อป้องกัน SQL Injection
+      `SELECT * FROM helloworld_test.bookings WHERE bookingId = ? LIMIT 1`,  // เปลี่ยนจาก helloworld_test.bookings เป็น bookingId
+      [parseInt(req.params.id)]  // ใช้ parameter binding แทนการต่อสาย string ด้วยตัวเองเพื่อป้องกัน SQL Injection
     );
 
     // ตรวจสอบหากไม่มีข้อมูลใน rows
     if (rows.length === 0) {
-      return res.status(404).json({ message: "Room not found" });
+      return res.status(404).json({ message: "Booking not found" });  // เปลี่ยนจาก "Room not found" เป็น "Booking not found"
     }
 
-    // ส่งข้อมูลห้องที่ค้นพบ
-    return res.status(200).json(rows[0]);  // ส่งข้อมูลห้องแค่ 1 รายการ
+    // ส่งข้อมูลการจองที่ค้นพบ
+    return res.status(200).json(rows[0]);  // ส่งข้อมูลการจองแค่ 1 รายการ
   } catch (error) {
     console.log(error);
     return res.status(500).json({ error: 'Internal Server Error' });
   }
 };
+
 
 const addBookings = async (req, res) => {
   try {
@@ -53,4 +54,4 @@ const addBookings = async (req, res) => {
 };
 
 
-export {getAllBooking,getByIdRoom, addBookings}; 
+export {getAllBooking,getByIdBookings, addBookings}; 
