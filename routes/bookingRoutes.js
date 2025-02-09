@@ -1,5 +1,6 @@
 import express from 'express';
 import { getAllBooking, addBookings } from '../controller/bookingController.js';
+import { getByIdRoom } from '../controller/roomController.js';
 
 const router = express.Router();
 
@@ -59,6 +60,61 @@ const router = express.Router();
  */
 router.get('/getall', getAllBooking);
 
+/**
+ * @swagger
+ * /api/bookings/getall:
+ *   get:
+ *     tags:
+ *       - Bookings Management
+ *     summary: ดึงรายการห้องทั้งหมด
+ *     responses:
+ *       200:
+ *         description: สำเร็จ - คืนรายการห้องทั้งหมด
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   bookingId:
+ *                     type: integer
+ *                     example: 1
+ *                   bookingName:
+ *                     type: string
+ *                     example: "สำหรับรายวิชา Network"
+ *                   bookingDESC:
+ *                     type: string
+ *                     example: "เรียนจำนวน 1 หน่วยกิต อาจารย์ผู้สอน สหาย"
+ *                   startTime:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2025-02-09T10:30:00Z"
+ *                   endTime:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2025-02-09T14:30:00Z"
+ *                   SType:
+ *                     type: string
+ *                     example: "Staff"
+ *                   fk_room:
+ *                     type: integer
+ *                     example: 1
+ *       500:
+ *         description: เกิดข้อผิดพลาดใน server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Database error"
+ *                 message:
+ *                   type: string
+ *                   example: "Cannot fetch room data"
+ */
+router.get('/getByIdBooking', getBy);
 
 /**
  * @swagger

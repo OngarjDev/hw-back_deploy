@@ -24,6 +24,9 @@ const router = express.Router();
  *                   room_name:
  *                     type: string
  *                     example: "2301"
+ *                   buildName:
+ *                   type: string
+ *                   example: "CB3"
  *       500:
  *         description: เกิดข้อผิดพลาดใน server
  *         content:
