@@ -10,6 +10,19 @@ const getAllBooking = async (req, res) => {
     }
 }
 
+const JoinTableRoom = async (req, res) => {
+  try {
+    const [rows] = await pool.promise().query(
+      `Select * from helloworld_test.bookings INNER JOIN helloworld_test.rooms 
+      ON helloworld_test.bookings.fk_room =  helloworld_test.rooms.roomId;`);
+    return res.status(200).json(rows);  // ส่งผลลัพธ์กลับไปในรูปแบบ JSON
+  } catch (error) {
+    console.log(error)
+    return res.status(500).json({ error: 'Internal Server Error' });
+  }
+}
+
+
 const getByIdBookings = async (req, res) => {
   try {
     const [rows] = await pool.promise().query(
@@ -54,4 +67,4 @@ const addBookings = async (req, res) => {
 };
 
 
-export {getAllBooking,getByIdBookings, addBookings}; 
+export {getAllBooking,JoinTableRoom,getByIdBookings, addBookings}; 

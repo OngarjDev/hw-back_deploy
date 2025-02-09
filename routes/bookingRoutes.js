@@ -1,5 +1,5 @@
 import express from 'express';
-import { getAllBooking,getByIdBookings, addBookings } from '../controller/bookingController.js';
+import { getAllBooking,JoinTableRoom,getByIdBookings, addBookings } from '../controller/bookingController.js';
 
 const router = express.Router();
 
@@ -65,6 +65,72 @@ const router = express.Router();
  *                   example: "Cannot fetch room data"
  */
 router.get('/getall', getAllBooking);
+
+/**
+ * @swagger
+ * /api/bookings/AllJoinTableRoom/:
+ *   get:
+ *     tags:
+ *       - Bookings Management
+ *     summary: ดึงรายการห้องทั้งหมด รวมถึงดึงข้อมูลให้ room ลิงค์กับ bookings
+ *     responses:
+ *       200:
+ *         description: สำเร็จ - คืนรายการห้องทั้งหมด
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   bookingId:
+ *                     type: integer
+ *                     example: 1
+ *                   bookingName:
+ *                     type: string
+ *                     example: "สำหรับรายวิชา Network"
+ *                   bookingDESC:
+ *                     type: string
+ *                     example: "เรียนจำนวน 1 หน่วยกิต อาจารย์ผู้สอน สหาย"
+ *                   startTime:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2025-02-09T10:30:00Z"
+ *                   endTime:
+ *                     type: string
+ *                     format: date-time
+ *                     example: "2025-02-09T14:30:00Z"
+ *                   SType:
+ *                     type: string
+ *                     example: "Staff"
+ *                   fk_room:
+ *                     type: integer
+ *                     example: 1
+ *                   roomId:
+ *                     type: integer
+ *                     example: 101
+ *                   roomName:
+ *                     type: string
+ *                     example: "ห้อง 101"
+ *                   buildName:
+ *                     type: string
+ *                     example: "อาคาร A"
+ *       500:
+ *         description: เกิดข้อผิดพลาดใน server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Database error"
+ *                 message:
+ *                   type: string
+ *                   example: "Cannot fetch room data"
+ */
+
+router.get('/AllJoinTableRoom/', JoinTableRoom);
 
 /**
  * @swagger
@@ -192,6 +258,76 @@ router.get('/getByIdBooking/:id', getByIdBookings);
  *                   example: "Cannot fetch room data"
  */
 router.post('/add', addBookings);
+
+/**
+ * @swagger
+ * /api/bookings/update/{id}:
+ *   patch:
+ *     tags:
+ *       - Bookings Management
+ *     summary: อัพเดตข้อมูลการจองห้อง
+ *     parameters:
+ *       - in: path
+ *         name: id
+ *         required: true
+ *         schema:
+ *           type: integer
+ *         example: 2
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               bookingId:
+ *                 type: integer
+ *                 example: 1
+ *               bookingName:
+ *                 type: string
+ *                 example: "สำหรับรายวิชา Network ทดสอบ only"
+ *               bookingDESC:
+ *                 type: string
+ *                 example: "ทดสอบ เรียนจำนวน 1 หน่วยกิต อาจารย์ผู้สอน สหาย"
+ *               startTime:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-02-09T11:30:00Z"
+ *               endTime:
+ *                 type: string
+ *                 format: date-time
+ *                 example: "2025-02-09T13:30:00Z"
+ *               SType:
+ *                 type: string
+ *                 example: "Staff 122"
+ *               fk_room:
+ *                 type: integer
+ *                 example: 5
+ *     responses:
+ *       200:
+ *         description: สามารถอัพเดตข้อมูลการจองได้
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 message:
+ *                   type: string
+ *                   example: "Booking updated successfully"
+ *       500:
+ *         description: เกิดข้อผิดพลาดใน server
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 error:
+ *                   type: string
+ *                   example: "Database error"
+ *                 message:
+ *                   type: string
+ *                   example: "Cannot update booking"
+ */
 
 
 export default router;
