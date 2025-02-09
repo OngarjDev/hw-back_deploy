@@ -1,6 +1,6 @@
 // routes/roomRoutes.js
 import express from 'express';
-import { addRoom, getAllRooms } from '../controller/roomController.js'; 
+import { addRoom, getAllRooms, getByIdRoom } from '../controller/roomController.js'; 
 
 const router = express.Router();
 
@@ -74,7 +74,7 @@ router.post('/add', addRoom); // ฟังก์ชันที่เพิ่�
 
 /**
  * @swagger
- * /api/rooms/getById/{id}:
+ * /api/rooms/getroomById/{id}:
  *   get:  # ใช้ GET แทน POST
  *     tags:
  *       - Room Management
@@ -105,6 +105,6 @@ router.post('/add', addRoom); // ฟังก์ชันที่เพิ่�
  *               error: "Database error"
  *               message: "Cannot fetch room data"
  */
-router.get('/getroomById/:id', addRoom);  // เปลี่ยนจาก .post เป็น .get
+router.get('/getroomById/:id', getByIdRoom);
 
 export default router;
