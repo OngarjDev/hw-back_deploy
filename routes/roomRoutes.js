@@ -1,4 +1,5 @@
-import express from 'express';  // ทำการ import express
+// routes/roomRoutes.js
+import express from 'express';
 import { addRoom, getAllRooms } from '../controller/roomController.js'; 
 
 const router = express.Router();
@@ -30,48 +31,8 @@ const router = express.Router();
  *             example:
  *               error: "Database error"
  *               message: "Cannot fetch room data"
- * 
- * 
  */
-router.get('/getall', getAllRooms);  // เรียกใช้ฟังก์ชัน getAllRooms
-/**
- * @swagger
- * /api/rooms/add:
- *   post:
- *     tags:
- *       - Room Management
- *     summary: เพิ่มข้อมูลห้องทั้งหมด
- *     parameters:
- *       - in: query
- *         name: roomName
- *         required: true
- *         schema:
- *           type: string
- *           example: "Lx12-2"
- *     responses:
- *       200:
- *         description: สำเร็จ - คืนรายการห้องทั้งหมด
- *         content:
- *           application/json:
- *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   room_name:
- *                     type: string
- *                     example: "2301"
- *       500:
- *         description: เกิดข้อผิดพลาดใน server
- *         content:
- *           application/json:
- *             example:
- *               error: "Database error"
- *               message: "Cannot fetch room data"
- */
-
-router.post('/add', getAllRooms)
-
+router.get('/getall', getAllRooms);  // เปลี่ยนจาก .post เป็น .get
 
 /**
  * @swagger
@@ -89,55 +50,53 @@ router.post('/add', getAllRooms)
  *           example: "Lx12-2"
  *     responses:
  *       200:
- *         description: สำเร็จ - คืนรายการห้องทั้งหมด
+ *         description: สำเร็จ - เพิ่มห้องใหม่
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   room_name:
- *                     type: string
- *                     example: "2301"
+ *               type: object
+ *               properties:
+ *                 room_name:
+ *                   type: string
+ *                   example: "2301"
+ *                 buildName:
+ *                   type: string
+ *                   example: "CB3"
  *       500:
  *         description: เกิดข้อผิดพลาดใน server
  *         content:
  *           application/json:
  *             example:
  *               error: "Database error"
- *               message: "Cannot fetch room data"
+ *               message: "Cannot add room"
  */
-
-router.post('/add', addRoom)
+router.post('/add', addRoom); // ฟังก์ชันที่เพิ่มห้องใหม่
 
 /**
  * @swagger
  * /api/rooms/getById/{id}:
- *   post:
+ *   get:  # ใช้ GET แทน POST
  *     tags:
  *       - Room Management
  *     summary: ค้นหาข้อมูลห้องด้วย ID
  *     parameters:
- *       - in: query
- *         name: Idroom
+ *       - in: path
+ *         name: id  # เปลี่ยนจาก `roomId` เป็น `id` ให้ตรงกับ URL path
  *         required: true
  *         schema:
- *           type: int
- *           example: "3"
+ *           type: integer
+ *         example: 3
  *     responses:
  *       200:
  *         description: สำเร็จตรวจพบห้อง ตาม ID
  *         content:
  *           application/json:
  *             schema:
- *               type: array
- *               items:
- *                 type: object
- *                 properties:
- *                   room_name:
- *                     type: string
- *                     example: "2301"
+ *               type: object
+ *               properties:
+ *                 roomId:
+ *                   type: integer
+ *                   example: 3
  *       500:
  *         description: เกิดข้อผิดพลาดใน server
  *         content:
@@ -146,6 +105,6 @@ router.post('/add', addRoom)
  *               error: "Database error"
  *               message: "Cannot fetch room data"
  */
+router.get('/getroomById/:id', addRoom);  // เปลี่ยนจาก .post เป็น .get
 
-router.post('/getroomById/:id', addRoom)
 export default router;

@@ -20,7 +20,7 @@ const addBookings = async (req, res) => {
 
     const query = `
       INSERT INTO helloworld_test.bookings (startTime, endTime, SType, fk_room,bookingName,bookingDESC) 
-      VALUES (?, ?, ?, ?,?,?)
+      VALUES (?, ?, ?, ?, ?, ?)
     `;
 
     const [rows] = await pool.promise().query(query, [startTime, endTime, SType, fk_room,bookingName,bookingDESC]);

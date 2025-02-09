@@ -22,7 +22,7 @@ const getByIdRoom =async (req, res) => {
 
 const addRoom = async (req, res) => {
   try {
-    const [rows] = await pool.promise().query(`Insert Into helloworld_test.rooms(roomName) Values ('${req.query.roomName}')`);
+    const [rows] = await pool.promise().query(`Insert Into helloworld_test.rooms(roomName,bulidName) Values ('${req.query.roomName}','${req.query.bulidName}')`);
     return  res.status(200).json(rows);
   } catch (error) {
     console.log(error)
