@@ -12,18 +12,18 @@ const getAllBooking = async (req, res) => {
 
 const addBookings = async (req, res) => {
   try {
-    let { startTime, endTime, SType, fk_room } = req.body;
+    let { startTime, endTime, SType, fk_room , bookingName,bookingDESC} = req.body;
 
     // แปลง ISO 8601 -> รูปแบบที่ MySQL รองรับ
     startTime = new Date(startTime).toISOString().slice(0, 19).replace("T", " ");
     endTime = new Date(endTime).toISOString().slice(0, 19).replace("T", " ");
 
     const query = `
-      INSERT INTO helloworld_test.bookings (startTime, endTime, SType, fk_room) 
-      VALUES (?, ?, ?, ?)
+      INSERT INTO helloworld_test.bookings (startTime, endTime, SType, fk_room,bookingName,bookingDESC) 
+      VALUES (?, ?, ?, ?,?,?)
     `;
 
-    const [rows] = await pool.promise().query(query, [startTime, endTime, SType, fk_room]);
+    const [rows] = await pool.promise().query(query, [startTime, endTime, SType, fk_room,bookingName,bookingDESC]);
 
     return res.status(200).json({ message: "Booking added successfully", rows });
   } catch (error) {

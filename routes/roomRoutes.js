@@ -110,4 +110,42 @@ router.post('/add', getAllRooms)
  */
 
 router.post('/add', addRoom)
+
+/**
+ * @swagger
+ * /api/rooms/getById/{id}:
+ *   post:
+ *     tags:
+ *       - Room Management
+ *     summary: ค้นหาข้อมูลห้องด้วย ID
+ *     parameters:
+ *       - in: query
+ *         name: Idroom
+ *         required: true
+ *         schema:
+ *           type: int
+ *           example: "3"
+ *     responses:
+ *       200:
+ *         description: สำเร็จตรวจพบห้อง ตาม ID
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 type: object
+ *                 properties:
+ *                   room_name:
+ *                     type: string
+ *                     example: "2301"
+ *       500:
+ *         description: เกิดข้อผิดพลาดใน server
+ *         content:
+ *           application/json:
+ *             example:
+ *               error: "Database error"
+ *               message: "Cannot fetch room data"
+ */
+
+router.post('/getroomById/:id', addRoom)
 export default router;
